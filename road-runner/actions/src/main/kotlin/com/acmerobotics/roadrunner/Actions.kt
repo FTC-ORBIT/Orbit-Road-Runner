@@ -72,7 +72,7 @@ data class ParallelAction(
             counter++
             }
         }
-        return if (counter > 1) {
+        return if (counter > 0) {
             true
         } else {
             actions = emptyList()
