@@ -66,8 +66,18 @@ data class ParallelAction(
     constructor(vararg actions: Action) : this(actions.asList())
 
     override fun run(p: TelemetryPacket): Boolean {
-        actions = actions.filter { it.run(p) }
-        return actions.isNotEmpty()
+        var counter = 0
+        actions.forEach {
+            if (it.run(p)) {
+            counter++
+            }
+        }
+        return if (counter > 1) {
+            true
+        } else {
+            actions = emptyList()
+            false
+        }
     }
 
     override fun preview(fieldOverlay: Canvas) {
